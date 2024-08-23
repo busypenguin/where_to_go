@@ -1,12 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-# from static.places import roofs24.json, moscow_legends.json
+from .models import Place
+from django.shortcuts import get_object_or_404
 
 
 def show_map(request):
+    place_moscow_legends = Place.objects.get(title='Экскурсионная компания «Легенды Москвы»')
     moscow_legends = {
-        "title": "Экскурсионная компания «Легенды Москвы»",
+        "title": place_moscow_legends.title,
         "imgs": [
             "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/4f793576c79c1cbe68b73800ae06f06f.jpg",
             "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/7a7631bab8af3e340993a6fb1ded3e73.jpg",
@@ -15,15 +17,16 @@ def show_map(request):
             "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/0a79676b3d5e3b394717b4bf2e610a57.jpg",
             "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/1e27f507cb72e76b604adbe5e7b5f315.jpg"
         ],
-        "description_short": "Неважно, живёте ли вы в Москве всю жизнь или впервые оказались в столице, составить ёмкий, познавательный и впечатляющий маршрут по городу — творческая и непростая задача. И её с удовольствием берёт на себя экскурсионная компания «Легенды Москвы»!",
-        "description_long": "<p>Экскурсия от компании «Легенды Москвы» — простой, удобный и приятный способ познакомиться с городом или освежить свои чувства к нему. Что выберете вы — классическую или необычную экскурсию, пешую прогулку или путешествие по городу на автобусе? Любые варианты можно скомбинировать в уникальный маршрут и создать собственную индивидуальную экскурсионную программу.</p><p>Компания «Легенды Москвы» сотрудничает с аккредитованными экскурсоводами и тщательно следит за качеством экскурсий и сервиса. Автобусные экскурсии проводятся на комфортабельном современном транспорте. Для вашего удобства вы можете заранее забронировать конкретное место в автобусе — это делает посадку организованной и понятной.</p><p>По любым вопросам вы можете круглосуточно обратиться по телефонам горячей линии.</p><p>Подробности узнавайте <a class=\"external-link\" href=\"https://moscowlegends.ru \" target=\"_blank\">на сайте</a>. За обновлениями удобно следить <a class=\"external-link\" href=\"https://vk.com/legends_of_moscow \" target=\"_blank\">«ВКонтакте»</a>, <a class=\"external-link\" href=\"https://www.facebook.com/legendsofmoscow?ref=bookmarks \" target=\"_blank\">в Facebook</a>.</p>",
+        "description_short": place_moscow_legends.description_short,
+        "description_long": place_moscow_legends.description_long,
         "coordinates": {
-            "lng": "37.64912239999976",
-            "lat": "55.77754550000014"
+            "lng": place_moscow_legends.lng,
+            "lat": place_moscow_legends.lat
         }
     }
+    place_roofs24 = Place.objects.get(title="Экскурсионный проект «Крыши24.рф»")
     roofs24 = {
-        "title": "Экскурсионный проект «Крыши24.рф»",
+        "title": place_roofs24.title,
         "imgs": [
             "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/af7b8599fec9d2542a011f1d01d459e2.jpg",
             "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/965c5a3ff5b2431e646d30b6744afd2d.jpg",
@@ -33,11 +36,11 @@ def show_map(request):
             "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/fadf618505b087fa539e883f33f850b2.jpg",
             "https://raw.githubusercontent.com/devmanorg/where-to-go-places/master/media/ec461a89a1d0d5a4cb7c81f1fc0a4e89.jpg"
         ],
-        "description_short": "Хотите увидеть Москву с высоты и разделить яркие впечатления с друзьями? В этом поможет проект «Крыши24.рф». Вы можете выбрать крышу из множества интересных вариантов и провести там свидание, вечеринку, творческое занятие, фотосессию или что-то ещё.",
-        "description_long": "<p>Проект «Крыши24.рф» проводит экскурсии и мероприятия на крышах, откуда открываются впечатляющие виды на мегаполис. </p><h4>Экскурсии на высоте</h4><p>Список крыш, на которые можно подняться, очень велик, и находятся они в разных уголках города. Оттуда видны достопримечательности и красивейшие городские панорамы, так что это отличная возможность заново открыть для себя Москву. Экскурсии безопасны, на эти крыши можно подниматься с детьми. Перед подъёмом опытный гид проведёт инструктаж и будет сопровождать вас во время прогулки.</p><p>С крыш, доступных для посещения, вы увидите «Москва Сити» вблизи, стадион «Лужники», Новодевичий монастырь, Красную и Киевскую площади, мост Богдана Хмельницкого, сталинские высотки, Новый Арбат, и многие другие знаковые места столицы. </p><p>Стоимость экскурсии — 1250 рублей, продолжительность — 1 час. В стоимость экскурсии включены услуги гида.</p><h4>Свидания на высоте птичьего полёта</h4><p>А ещё «Крыши24.рф» — настоящая находка для тех, кто хочет устроить незабываемое романтическое свидание. Выбирайте свой вариант из пяти крыш, расположенных рядом с главными достопримечательностями, и удивите любимого человека. </p><p>На крыше для вас устроят зону отдыха с пледами и подушками. В стоимость также входят свечи, цветок, бокалы, столовые приборы, фруктовая тарелка и напиток. А если ваше событие более строгое и торжественное, то для вас поставят праздничный стол и стулья. За дополнительную плату вы можете заказать букет цветов, воздушные шары, музыканта, виниловый проигрыватель, салют, напитки и еду. </p><p>Базовая стоимость свидания — 5500 рублей, продолжительность — 2 часа.</p><p><strong>Фотосессии над Москвой</strong></p><p>Необычным подарком для себя и для любимых может стать фотосессия на крышах. Из полусотни вариантов крыш вам помогут выбрать ту, которая подойдёт именно вам. На сессии будет работать профессиональный руфер-фотограф с опытом более 10 лет. В итоге вы получите около 100 фотоснимков, 15 из них — уже обработанными, так что их можно будет сразу выкладывать в соцсети и удивлять друзей.</p><p>Стоимость фотосессии — от 4000 рублей, продолжительность — 1 час. </p><p>Также проект «Крыши24.рф» организует девичники, вечеринки, творческие мероприятия и многое другое.</p><p>Узнать подробности можно на <a class=\"external-link\" href=\"https://www.крыши24.рф/\" target=\"_blank\">официальном сайте</a> и в <a class=\"external-link\" href=\"https://instagram.com/roof24_moscow/\" target=\"_blank\">Instagram</a>.</p>",
+        "description_short": place_roofs24.description_short,
+        "description_long": place_roofs24.description_long,
         "coordinates": {
-            "lng": "37.32478399999957",
-            "lat": "55.70731600000015"
+            "lng": place_roofs24.lng,
+            "lat": place_roofs24.lat
         }
     }
     places = {
@@ -47,10 +50,10 @@ def show_map(request):
           "type": "Feature",
           "geometry": {
             "type": "Point",
-            "coordinates": [37.62, 55.793676]
+            "coordinates": [place_moscow_legends.lng, place_moscow_legends.lat]
           },
           "properties": {
-            "title": "«Легенды Москвы",
+            "title": "«Легенды Москвы»",
             "placeId": "moscow_legends",
             "detailsUrl": moscow_legends
         }
@@ -59,7 +62,7 @@ def show_map(request):
           "type": "Feature",
           "geometry": {
             "type": "Point",
-            "coordinates": [37.64, 55.753676]
+            "coordinates": [place_roofs24.lng, place_roofs24.lat]
           },
           "properties": {
             "title": "Крыши24.рф",
@@ -71,3 +74,5 @@ def show_map(request):
     }
     data = {'places': places}
     return render(request, 'index.html', context=data)
+
+
