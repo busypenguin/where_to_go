@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from .models import Place
+from .models import Place, Image
 from django.shortcuts import get_object_or_404
+from django.http import JsonResponse
 
 
 def show_map(request):
@@ -76,3 +77,19 @@ def show_map(request):
     return render(request, 'index.html', context=data)
 
 
+def show_place(request, id=1):
+    place = get_object_or_404(Place, id=id)
+    images = Image.objects.filter(place_id=id)
+    img = []
+    for image in images:
+        img.append(image.image.url)
+    response = JsonResponse({'title': place.title,
+                             'img': img,
+                             "description_short": place.description_short,
+                             "description_long": place.description_long,
+                             "coordinates": {
+                                "lng": place.lng,
+                                "lat": place.lat}},
+                            safe=False, json_dumps_params={
+                                'ensure_ascii': False, 'indent': 2})
+    return response
