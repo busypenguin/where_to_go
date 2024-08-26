@@ -8,6 +8,9 @@ class Place(models.Model):
     lng = models.FloatField(blank=True, null=True)
     lat = models.FloatField(blank=True, null=True)
 
+    class Meta:
+        ordering = ['title']
+
     def __str__(self):
         if self.title:
             return self.title
@@ -17,6 +20,9 @@ class Image(models.Model):
     place = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(blank=True, null=True)
     number = models.PositiveIntegerField(blank=True, null=True)
+
+    class Meta:
+        ordering = ['number']
 
     def __str__(self):
         if self.image:
