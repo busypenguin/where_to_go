@@ -31,10 +31,10 @@ SECRET_KEY=h9cte7...h$6yte5...Fhchs9y
 $ python -m http.server 8000
 ```
 
-На карту можно посмотреть по ссылке [Карта](http://127.0.0.1:8000/)
+На карту можно посмотреть по ссылке [Карта](https://busypengu1n.pythonanywhere.com/)
 
 
-В админку можно зайти по ссылке [Админка](http://127.0.0.1:8000/admin/)
+В админку можно зайти по ссылке [Админка](https://busypengu1n.pythonanywhere.com/admin/)
 
 
 ## Используемые библиотеки
