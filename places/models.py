@@ -18,9 +18,9 @@ class Place(models.Model):
 
 
 class Image(models.Model):
-    place = models.ForeignKey(Place, on_delete=models.CASCADE, blank=True, null=True)
+    place = models.ForeignKey(Place, related_name='images', on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(blank=True, null=True)
-    number = models.PositiveIntegerField(blank=True, null=True)
+    number = models.PositiveIntegerField(default=0, db_index=True, blank=True, null=True)
 
     class Meta:
         ordering = ['number']
