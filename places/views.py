@@ -7,38 +7,30 @@ from django.http import JsonResponse
 
 
 def show_map(request):
-    place_moscow_legends = Place.objects.get(title='Экскурсионная компания «Легенды Москвы»')
-    place_roofs24 = Place.objects.get(title="Экскурсионный проект «Крыши24.рф»")
-    places = {
-      "type": "FeatureCollection",
-      "features": [
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [place_moscow_legends.lng, place_moscow_legends.lat]
-          },
-          "properties": {
-            "title": "«Легенды Москвы»",
-            "placeId": "moscow_legends",
-            "detailsUrl": './places/1'
-          }
-        },
-        {
-          "type": "Feature",
-          "geometry": {
-            "type": "Point",
-            "coordinates": [place_roofs24.lng, place_roofs24.lat]
-          },
-          "properties": {
-            "title": "Крыши24.рф",
-            "placeId": "roofs24",
-            "detailsUrl": './places/2'
-          }
+    places = Place.objects.filter()
+    place_on_map = []
+    for place in places:
+        place_on_map_template = {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [place.lng, place.lat]
+            },
+            "properties": {
+              "title": place.title,
+              "placeId": place.id,
+              "detailsUrl": f'./places/{place.id}'
+            }
         }
-      ]
+
+        place_on_map.append(place_on_map_template)
+
+    places_on_map = {
+      "type": "FeatureCollection",
+      "features": place_on_map
     }
-    data = {'places': places}
+
+    data = {'places': places_on_map}
     return render(request, 'index.html', context=data)
 
 
