@@ -3,6 +3,7 @@ from .models import Place, Image
 from django.utils.safestring import mark_safe
 from adminsortable2.admin import SortableTabularInline, SortableAdminMixin
 
+
 class ImageInline(SortableTabularInline):
     model = Image
     readonly_fields = ["get_preview"]

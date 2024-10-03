@@ -1,16 +1,12 @@
 from django.core.management.base import BaseCommand
 import os
 import django
-
-
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "where_to_go.settings")
-django.setup()
-
-
 from places.models import Place, Image
 import requests
 from django.core.files.base import ContentFile
 
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "where_to_go.settings")
+django.setup()
 
 
 class Command(BaseCommand):
