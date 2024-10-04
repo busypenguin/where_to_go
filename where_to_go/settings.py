@@ -3,7 +3,6 @@ from environs import Env
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-
 env = Env()
 env.read_env()
 SECRET_KEY = env.str('SECRET_KEY')
@@ -91,13 +90,11 @@ USE_L10N = True
 USE_TZ = True
 
 
-if DEBUG:
-    STATIC_URL = 'static/'
-    STATICFILES_DIRS = [
-        BASE_DIR + "/static",
-    ]
-else:
-    STATIC_ROOT = 'static'
+
+STATIC_URL = 'static/'
+
+STATIC_ROOT = 'static'
+
 
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
