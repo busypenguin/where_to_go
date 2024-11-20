@@ -40,8 +40,8 @@ def show_place(request, id=1):
         img.append(image.image.url)
     response = JsonResponse({'title': place.title,
                              'imgs': img,
-                             "description_short": place.description_short,
-                             "description_long": place.description_long,
+                             "short_description": place.short_description,
+                             "long_description": place.long_description,
                              "coordinates": {
                                 "lng": place.lng,
                                 "lat": place.lat}},
