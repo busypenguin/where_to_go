@@ -11,11 +11,10 @@ class ImageInline(SortableTabularInline):
     fields = ('image', 'get_preview', 'number')
 
     def get_preview(self, obj):
-        return format_html('<img src="{url}" height=200 />',
+        return format_html('<img src="{url}" />',
                            mark_safe(
                             url=obj.image.url,
-                            width=obj.image.width,
-                            height=obj.image.height,
+                            style="max-height"
                             )
                            )
 
