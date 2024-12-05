@@ -39,13 +39,18 @@ def show_place(request, id=1):
     imgs = []
     for image in images:
         imgs.append(image.image.url)
-    response = JsonResponse({'title': place.title,
-                             'imgs': imgs,
-                             "short_description": place.short_description,
-                             "long_description": place.long_description,
-                             "coordinates": {
-                                "lng": place.lng,
-                                "lat": place.lat}},
-                            safe=False, json_dumps_params={
-                                'ensure_ascii': False, 'indent': 2})
+    response = JsonResponse({
+      'title': place.title,
+      'imgs': imgs,
+      "short_description": place.short_description,
+      "long_description": place.long_description,
+      "coordinates": {
+        "lng": place.lng,
+        "lat": place.lat
+        }
+      },
+      safe=False, json_dumps_params={
+          'ensure_ascii': False, 'indent': 2
+          }
+      )
     return response
