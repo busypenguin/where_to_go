@@ -13,8 +13,7 @@ class Place(models.Model):
         ordering = ['title']
 
     def __str__(self):
-        if self.title:
-            return self.title
+        return self.title
 
 
 class Image(models.Model):
