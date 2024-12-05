@@ -1,16 +1,21 @@
-from django.core.management.base import BaseCommand
 import os
+import json
+from io import BytesIO
+from PIL import Image as PILimage
+import requests
 import django
+
+from django.core.management.base import BaseCommand
+from django.core.files.base import ContentFile
+
+from places.models import Place, Image
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "where_to_go.settings")
 django.setup()
-from places.models import Place, Image
-import requests
-from PIL import Image as PILimage
-from io import BytesIO
-from django.core.files.base import ContentFile
-import json
+
+
 class Command(BaseCommand):
     help = 'Load places to DB'
+
     def handle(self, *args, **options):
         path = 'places/places'
         for dirs, folder, files in os.walk(path):
