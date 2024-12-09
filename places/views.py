@@ -36,9 +36,7 @@ def show_map(request):
 def show_place(request, id=1):
     place = get_object_or_404(Place, id=id)
     images = Image.objects.filter(place_id=id)
-    imgs = []
-    for image in images:
-        imgs.append(image.image.url)
+    imgs = [image.image.url for image in images]
     response = JsonResponse({
       'title': place.title,
       'imgs': imgs,
