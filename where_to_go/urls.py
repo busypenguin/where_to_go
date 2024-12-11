@@ -9,7 +9,7 @@ from places.views import show_map, show_place
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', show_map),
-    path('places/<int:id>/', show_place),
+    path('places/<int:id>/', show_place, name='place-detail'),
     path('tinymce/', include('tinymce.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + static(
     settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

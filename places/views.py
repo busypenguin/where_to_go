@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from django.http import JsonResponse
+from django.urls import reverse
 
 from .models import Place, Image
 
@@ -18,7 +19,7 @@ def show_map(request):
             "properties": {
               "title": place.title,
               "placeId": place.id,
-              "detailsUrl": f'./places/{place.id}'
+              "detailsUrl": reverse('place-detail', kwargs={'id': place.id})
             }
         }
 
