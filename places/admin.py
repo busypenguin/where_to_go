@@ -23,3 +23,8 @@ class PlaceAdmin(SortableAdminMixin, admin.ModelAdmin):
     inlines = [
         ImageInline,
     ]
+
+
+@admin.register(Image)
+class ImageAdmin(SortableAdminMixin, admin.ModelAdmin):
+    raw_id_fields = ('place',)
