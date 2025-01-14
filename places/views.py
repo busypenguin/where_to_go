@@ -11,23 +11,23 @@ def show_map(request):
     place_on_map = []
     for place in places:
         place_on_map_template = {
-            "type": "Feature",
-            "geometry": {
-              "type": "Point",
-              "coordinates": [place.lng, place.lat]
+            'type': 'Feature',
+            'geometry': {
+              'type': 'Point',
+              'coordinates': [place.lng, place.lat]
             },
-            "properties": {
-              "title": place.title,
-              "placeId": place.id,
-              "detailsUrl": reverse('place-detail', kwargs={'id': place.id})
+            'properties': {
+              'title': place.title,
+              'placeId': place.id,
+              'detailsUrl': reverse('place-detail', kwargs={'id': place.id})
             }
         }
 
         place_on_map.append(place_on_map_template)
 
     places_on_map = {
-      "type": "FeatureCollection",
-      "features": place_on_map
+      'type': 'FeatureCollection',
+      'features': place_on_map
     }
 
     data = {'places': places_on_map}
@@ -41,11 +41,11 @@ def show_place(request, id=1):
     response = JsonResponse({
       'title': place.title,
       'imgs': imgs,
-      "short_description": place.short_description,
-      "long_description": place.long_description,
-      "coordinates": {
-        "lng": place.lng,
-        "lat": place.lat
+      'short_description': place.short_description,
+      'long_description': place.long_description,
+      'coordinates': {
+        'lng': place.lng,
+        'lat': place.lat
         }
       },
       safe=False, json_dumps_params={
