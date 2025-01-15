@@ -24,10 +24,10 @@ python3 manage.py migrate
 python3 manage.py runserver
 ```
 
-Для загрузки новых мест используется команда `load_place` Дя запуска нужно ввести в терминал:
+Для загрузки нового места используется команда `load_place` Дя запуска нужно ввести в терминал:
 
 ```sh
-python3 manage.py load_places http://адрес/файла.json
+python3 manage.py load_place http://адрес/файла.json
 ```
 
 
