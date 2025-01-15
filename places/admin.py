@@ -12,12 +12,12 @@ class ImageInline(SortableTabularInline):
     fields = ('image', 'get_preview', 'number')
 
     def get_preview(self, obj):
-        return mark_safe(
-            format_html(
-                '<img src="{url}" style="max_height"/>',
+        return format_html(
+                '<img src="{url}" style="max-height: {max_height}px; max-width: {max_width}px"/>',
                 url=obj.image.url,
+                max_height=200,
+                max_width=300
                 )
-            )
 
 
 @admin.register(Place)
