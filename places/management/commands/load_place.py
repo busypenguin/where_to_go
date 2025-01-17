@@ -46,5 +46,3 @@ class Command(BaseCommand):
             resp = requests.get(img)
             resp.raise_for_status()
             Image.objects.create(place=place, image=ContentFile(resp.content, str(img)), number=index)
-            # image, _ = Image.objects.get_or_create(place=place, number=index)
-            # image.image.save(str(img), ContentFile(resp.content), save=True)        
