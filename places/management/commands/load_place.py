@@ -22,13 +22,22 @@ class Command(BaseCommand):
         requested_path_to_json = requests.get(path_to_json)
         serialized_place = requested_path_to_json.json()
 
-        place, _ = Place.objects.get_or_create(
-            title=serialized_place['title'],
-            short_description=serialized_place['description_short'],
-            long_description=serialized_place['description_long'],
-            lng=serialized_place['coordinates']['lng'],
-            lat=serialized_place['coordinates']['lat']
-        )
+        try:
+            place, _ = Place.objects.get(
+                title=serialized_place['title'],
+                short_description=serialized_place['description_short'],
+                long_description=serialized_place['description_long'],
+                lng=serialized_place['coordinates']['lng'],
+                lat=serialized_place['coordinates']['lat']
+            )
+        except Place.DoesNotExist:
+            place, _ = Place.objects.create(
+                title=serialized_place['title'],
+                short_description=serialized_place['description_short'],
+                long_description=serialized_place['description_long'],
+                lng=serialized_place['coordinates']['lng'],
+                lat=serialized_place['coordinates']['lat']
+            )
         images = serialized_place['imgs']
         for index, img in enumerate(images):
             resp = requests.get(img)
