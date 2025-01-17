@@ -4,6 +4,7 @@ from io import BytesIO
 from PIL import Image as PILimage
 import requests
 import django
+from time import sleep
 
 from django.core.management.base import BaseCommand
 from django.core.files.base import ContentFile
@@ -43,6 +44,18 @@ class Command(BaseCommand):
             )
         images = serialized_place['imgs']
         for index, img in enumerate(images):
-            resp = requests.get(img)
-            resp.raise_for_status()
-            Image.objects.create(place=place, image=ContentFile(resp.content, str(img)), number=index)
+            try:
+                resp = requests.get(img)
+                resp.raise_for_status()
+                Image.objects.create(
+                    place=place,
+                    image=ContentFile(resp.content, str(img)),
+                    number=index
+                    )
+            except requests.exceptions.HTTPError:
+                raise requests.exceptions.HTTPError(f'Код ошибки загрузки картинки {resp.status_code}')
+                break
+            except requests.exceptions.ConnectionError:
+                raise requests.exceptions.ConnectionError('Отсутствует подключение к интернету')
+                sleep(0.2)
+                continue
