@@ -26,7 +26,7 @@ class Command(BaseCommand):
             raise requests.exceptions.HTTPError(serialized_place['error'])
 
         try:
-            place, _ = Place.objects.get(
+            place = Place.objects.get(
                 title=serialized_place['title'],
                 short_description=serialized_place['description_short'],
                 long_description=serialized_place['description_long'],
@@ -34,7 +34,7 @@ class Command(BaseCommand):
                 lat=serialized_place['coordinates']['lat']
             )
         except Place.DoesNotExist:
-            place, _ = Place.objects.create(
+            place = Place.objects.create(
                 title=serialized_place['title'],
                 short_description=serialized_place['description_short'],
                 long_description=serialized_place['description_long'],
@@ -45,5 +45,6 @@ class Command(BaseCommand):
         for index, img in enumerate(images):
             resp = requests.get(img)
             resp.raise_for_status()
-            image, _ = Image.objects.get_or_create(place=place, number=index)
-            image.image.save(str(img), ContentFile(resp.content), save=True)        
+            Image.objects.create(place=place, image=ContentFile(resp.content, str(img)), number=index)
+            # image, _ = Image.objects.get_or_create(place=place, number=index)
+            # image.image.save(str(img), ContentFile(resp.content), save=True)        
