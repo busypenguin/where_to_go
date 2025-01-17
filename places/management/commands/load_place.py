@@ -20,7 +20,10 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         path_to_json = options['path_to_json']
         requested_path_to_json = requests.get(path_to_json)
+        requested_path_to_json.raise_for_status()
         serialized_place = requested_path_to_json.json()
+        if 'error' in serialized_place:
+            raise requests.exceptions.HTTPError(serialized_place['error'])
 
         try:
             place, _ = Place.objects.get(
@@ -41,5 +44,6 @@ class Command(BaseCommand):
         images = serialized_place['imgs']
         for index, img in enumerate(images):
             resp = requests.get(img)
+            resp.raise_for_status()
             image, _ = Image.objects.get_or_create(place=place, number=index)
             image.image.save(str(img), ContentFile(resp.content), save=True)        
